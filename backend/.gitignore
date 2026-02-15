@@ -151,3 +151,41 @@ cython_debug/
 
 # PyCharm
 .idea/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Claude/AI Assistant
+.claude/
+.planning/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
