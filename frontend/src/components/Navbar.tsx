@@ -16,17 +16,17 @@ export default function Navbar() {
     ];
 
     return (
-        <nav className="fixed w-full top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+        <nav className="sticky w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-16">
+                <div className="flex justify-between h-20">
                     {/* Logo Section */}
                     <div className="flex items-center">
-                        <Link to="/" className="flex items-center gap-2 group">
-                            <div className="bg-primary/10 p-2 rounded-lg group-hover:bg-primary/20 transition-colors">
-                                <MapPin className="h-6 w-6 text-primary" />
+                        <Link to="/" className="flex items-center gap-2.5 group">
+                            <div className="bg-gradient-to-br from-primary-500 to-primary-600 p-2.5 rounded-xl group-hover:from-primary-600 group-hover:to-primary-700 transition-all duration-300 shadow-soft group-hover:shadow-soft-xl">
+                                <MapPin className="h-6 w-6 text-white" />
                             </div>
-                            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-light to-primary-dark">
-                                VeriStay
+                            <span className="text-2xl font-display font-bold text-gray-900 tracking-tight">
+                                Veri<span className="text-primary-600">Stay</span>
                             </span>
                         </Link>
                     </div>
@@ -40,10 +40,10 @@ export default function Navbar() {
                                     key={link.path}
                                     to={link.path}
                                     className={cn(
-                                        "flex items-center gap-2 text-sm font-medium transition-all duration-200",
+                                        "flex items-center gap-2 text-sm font-semibold transition-all duration-200 px-4 py-2 rounded-lg",
                                         isActive(link.path)
-                                            ? "text-primary"
-                                            : "text-gray-500 hover:text-primary"
+                                            ? "text-primary-700 bg-primary-50"
+                                            : "text-gray-600 hover:text-primary-600 hover:bg-gray-50"
                                     )}
                                 >
                                     <Icon className="h-4 w-4" />
@@ -55,7 +55,7 @@ export default function Navbar() {
                         {/* Modern Login Button */}
                         <Link
                             to="/login"
-                            className="flex items-center gap-2 bg-gradient-primary text-white px-5 py-2.5 rounded-full hover:opacity-90 transition-all duration-200 shadow-lg shadow-primary/30 hover:shadow-teal-glow font-medium text-sm"
+                            className="flex items-center gap-2 bg-gradient-to-r from-primary-600 to-primary-500 text-white px-6 py-2.5 rounded-lg hover:from-primary-700 hover:to-primary-600 transition-all duration-300 font-semibold text-sm shadow-soft hover:shadow-soft-xl hover:scale-105 transform"
                         >
                             <User className="h-4 w-4" />
                             Login
@@ -66,7 +66,7 @@ export default function Navbar() {
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="p-2 rounded-md text-gray-600"
+                            className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
                         >
                             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                         </button>
@@ -75,8 +75,11 @@ export default function Navbar() {
             </div>
 
             {/* Mobile menu */}
-            <div className={cn("md:hidden", isOpen ? "block" : "hidden")}>
-                <div className="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-md border-t border-gray-100">
+            <div className={cn(
+                "md:hidden transition-all duration-300 overflow-hidden",
+                isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            )}>
+                <div className="px-4 pt-2 pb-4 space-y-2 bg-white/98 backdrop-blur-lg border-t border-gray-100">
                     {navLinks.map((link) => {
                         const Icon = link.icon;
                         return (
@@ -85,10 +88,10 @@ export default function Navbar() {
                                 to={link.path}
                                 onClick={() => setIsOpen(false)}
                                 className={cn(
-                                    "flex items-center gap-3 px-3 py-2 rounded-md text-base font-medium transition-all duration-200",
+                                    "flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-all duration-200",
                                     isActive(link.path)
-                                        ? "text-blue-600 bg-blue-50"
-                                        : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                                        ? "text-primary-700 bg-primary-50"
+                                        : "text-gray-600 hover:text-primary-600 hover:bg-gray-50"
                                 )}
                             >
                                 <Icon className="h-5 w-5" />
@@ -101,7 +104,7 @@ export default function Navbar() {
                     <Link
                         to="/login"
                         onClick={() => setIsOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2 rounded-md text-base font-medium bg-primary text-white hover:bg-primary/90 transition-all duration-200"
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-700 hover:to-primary-600 transition-all duration-300 shadow-soft"
                     >
                         <User className="h-5 w-5" />
                         Login

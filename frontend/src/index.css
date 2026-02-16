@@ -1,22 +1,99 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
-/* Leaflet Map Fixes */
-.leaflet-container {
-  width: 100%;
-  height: 100%;
-  z-index: 10;
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Open Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', 'Open Sans', system-ui, sans-serif;
+  }
 }
 
-/* Modern Dot Pattern Background */
-.bg-grid-pattern {
+@layer components {
+  /* Leaflet Map Fixes */
+  .leaflet-container {
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+
+  /* Modern Dot Pattern Background */
+  .bg-grid-pattern {
     background-color: #ffffff;
     background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
     background-size: 24px 24px;
-}
+  }
 
-/* Smooth scrolling for the whole app */
-html {
-  scroll-behavior: smooth;
+  /* Glassmorphism utility */
+  .glass {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  /* Button component */
+  .btn-primary {
+    @apply bg-primary-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-600 transition-all duration-300 shadow-soft hover:shadow-soft-xl;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-primary-700 border-2 border-primary-200 px-6 py-3 rounded-lg font-medium hover:border-primary-500 hover:text-primary-600 transition-all duration-300;
+  }
+
+  /* Card component */
+  .card {
+    @apply bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300;
+  }
+
+  /* Section padding utilities */
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
 }
