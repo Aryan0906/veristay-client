@@ -28,31 +28,42 @@ export default function Home() {
     ];
 
     return (
-        <div className="bg-white">
+        <div className="bg-white bg-grid-pattern min-h-screen pt-16">
             {/* Hero Section */}
             <div className="relative overflow-hidden">
                 <div className="max-w-7xl mx-auto">
-                    <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                    <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 pt-20">
                         <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
                             <div className="sm:text-center lg:text-left">
-                                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                                {/* Verified Badge */}
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6 border border-primary/20">
+                                    <Shield className="w-4 h-4" />
+                                    #1 Trusted Student Housing
+                                </div>
+
+                                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl mb-6">
                                     <span className="block">Find your perfect</span>
-                                    <span className="block text-primary mt-1">student home</span>
+                                    {/* Gradient Text Effect */}
+                                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-light to-primary-dark mt-1">
+                                        student home
+                                    </span>
                                 </h1>
-                                <p className="mt-3 text-base text-gray-600 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                                    VeriStay connects students in Ahmedabad with verified hostels, PGs, and mess services near their college. No brokerage, full transparency.
+                                <p className="mt-3 text-base text-gray-600 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 leading-relaxed">
+                                    VeriStay connects students in Ahmedabad with verified hostels, PGs, and mess services near their college.
+                                    <span className="font-semibold text-gray-900"> No brokerage, full transparency.</span>
                                 </p>
-                                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start gap-4">
+                                {/* Buttons with Colored Shadows */}
+                                <div className="mt-8 sm:mt-10 sm:flex sm:justify-center lg:justify-start gap-4">
                                     <button
                                         onClick={() => navigate('/explore')}
-                                        className="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-transparent text-base font-semibold rounded-xl text-white bg-primary hover:bg-primary/90 md:py-4 md:text-lg md:px-10 shadow-lg hover:shadow-xl transition-all duration-300"
+                                        className="w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-full text-white bg-gradient-primary hover:opacity-90 md:py-4 md:text-lg md:px-10 shadow-lg shadow-primary/40 hover:shadow-teal-glow transition-all duration-300 transform hover:-translate-y-1"
                                     >
                                         <Search className="w-5 h-5 mr-2" />
                                         Explore Map
                                     </button>
                                     <button
                                         onClick={() => navigate('/about')}
-                                        className="mt-3 sm:mt-0 w-full sm:w-auto flex items-center justify-center px-8 py-4 border-2 border-primary text-base font-semibold rounded-xl text-primary bg-white hover:bg-primary/5 md:py-4 md:text-lg md:px-10 transition-all duration-300"
+                                        className="mt-3 sm:mt-0 w-full sm:w-auto flex items-center justify-center px-8 py-4 border border-gray-200 text-base font-semibold rounded-full text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 hover:border-gray-300 transition-all duration-300"
                                     >
                                         Learn More
                                     </button>
@@ -108,17 +119,19 @@ export default function Home() {
             </div>
 
             {/* CTA Section */}
-            <div className="bg-primary">
-                <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+            <div className="bg-gradient-primary-reverse relative overflow-hidden">
+                {/* Decorative overlay */}
+                <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+                <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between relative z-10">
                     <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                         <span className="block">Ready to find your perfect stay?</span>
-                        <span className="block text-blue-200 text-xl mt-2">Start exploring verified hostels near your college today.</span>
+                        <span className="block text-primary-light text-xl mt-2">Start exploring verified hostels near your college today.</span>
                     </h2>
                     <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
                         <div className="inline-flex rounded-xl shadow">
                             <button
                                 onClick={() => navigate('/explore')}
-                                className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-semibold rounded-xl text-primary bg-white hover:bg-gray-50 transition-all duration-200"
+                                className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-semibold rounded-xl text-primary-dark bg-white hover:bg-gray-50 active:scale-95 transition-all duration-200"
                             >
                                 Get Started
                             </button>

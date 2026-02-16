@@ -27,8 +27,9 @@ export default function About() {
     return (
         <div className="bg-white">
             {/* Hero Section */}
-            <div className="relative bg-primary text-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+            <div className="relative bg-gradient-primary text-white overflow-hidden">
+                <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative z-10">
                     <div className="text-center">
                         <h1 className="text-4xl font-extrabold sm:text-5xl md:text-6xl">
                             About VeriStay
@@ -102,8 +103,9 @@ export default function About() {
             </div>
 
             {/* CTA Section */}
-            <div className="bg-primary">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+            <div className="bg-gradient-primary-reverse relative overflow-hidden">
+                <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center relative z-10">
                     <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
                         Ready to find your perfect stay?
                     </h2>
@@ -113,7 +115,7 @@ export default function About() {
                     <div className="mt-8">
                         <a
                             href="/explore"
-                            className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-white hover:bg-gray-50 transition-colors duration-200"
+                            className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-dark bg-white hover:bg-gray-50 transition-colors duration-200"
                         >
                             Explore Now
                         </a>
