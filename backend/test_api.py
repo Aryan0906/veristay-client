@@ -1,16 +1,20 @@
 """Tests for the Hostel API."""
 import pytest
-import json
-from app import app, hostel_store
+from app import app, hostel_store, college_store, food_store
 
 @pytest.fixture
 def client():
     """Create a test client."""
     app.config['TESTING'] = True
+    hostel_store.clear()
+    food_store.vendors.clear()
+    food_store.next_id = 1
     with app.test_client() as client:
         yield client
     # Clear hostels after each test
     hostel_store.clear()
+    food_store.vendors.clear()
+    food_store.next_id = 1
 
 @pytest.fixture
 def sample_hostel(client):
@@ -136,3 +140,115 @@ class TestDeleteHostel:
         # Verify it's gone
         get_response = client.get(f'/api/hostels/{hostel_id}')
         assert get_response.status_code == 404
+
+
+class TestReviews:
+    def test_add_review_success(self, client, sample_hostel):
+        hostel_id = sample_hostel['id']
+        payload = {
+            "user_id": "user_1",
+            "rating": 4.5,
+            "comment": "Clean and safe place"
+        }
+        response = client.post(f'/api/hostels/{hostel_id}/reviews', json=payload)
+        assert response.status_code == 201
+        body = response.get_json()
+        assert body['review']['user_id'] == "user_1"
+        assert body['review']['rating'] == 4.5
+
+    def test_get_reviews_with_average(self, client, sample_hostel):
+        hostel_id = sample_hostel['id']
+        client.post(f'/api/hostels/{hostel_id}/reviews', json={
+            "user_id": "user_1", "rating": 4.0, "comment": "Good"
+        })
+        client.post(f'/api/hostels/{hostel_id}/reviews', json={
+            "user_id": "user_2", "rating": 5.0, "comment": "Great"
+        })
+
+        response = client.get(f'/api/hostels/{hostel_id}/reviews')
+        assert response.status_code == 200
+        body = response.get_json()
+        assert body['count'] == 2
+        assert body['average_rating'] == 4.5
+
+
+class TestColleges:
+    def test_get_colleges(self, client):
+        response = client.get('/api/colleges')
+        assert response.status_code == 200
+        body = response.get_json()
+        assert body['count'] >= 5
+
+    def test_get_college_with_nearby_hostels(self, client):
+        college = college_store.get_all()[0]
+        hostel_store.create(
+            name="Near College Hostel",
+            address="Nearby",
+            price_min=5000,
+            price_max=9000,
+            lat=college.lat,
+            long=college.long,
+            amenities=["WiFi"],
+            images=[],
+            is_verified=True,
+            college_id=college.id,
+        )
+
+        response = client.get(f'/api/colleges/{college.id}')
+        assert response.status_code == 200
+        body = response.get_json()
+        assert body['college']['id'] == college.id
+        assert len(body['nearby_hostels']) >= 1
+
+
+class TestFood:
+    def test_create_food_vendor(self, client):
+        payload = {
+            "name": "Test Mess",
+            "type": "mess",
+            "address": "Campus Road",
+            "lat": 23.03,
+            "long": 72.56,
+            "price_min": 80,
+            "price_max": 160,
+            "menu_items": ["Thali", "Rice"],
+            "hygiene_rating": 4.2,
+            "images": ["http://example.com/food.jpg"],
+            "college_id": 1,
+            "is_verified": True
+        }
+        response = client.post('/api/food', json=payload)
+        assert response.status_code == 201
+        body = response.get_json()
+        assert body['food_vendor']['name'] == "Test Mess"
+
+    def test_filter_food_by_type(self, client):
+        client.post('/api/food', json={
+            "name": "Canteen X",
+            "type": "canteen",
+            "address": "Center",
+            "lat": 23.04,
+            "long": 72.57,
+            "price_min": 60,
+            "price_max": 180,
+            "menu_items": ["Idli"],
+            "hygiene_rating": 4.0,
+            "images": []
+        })
+        client.post('/api/food', json={
+            "name": "Street Y",
+            "type": "street_food",
+            "address": "Road",
+            "lat": 23.02,
+            "long": 72.58,
+            "price_min": 40,
+            "price_max": 120,
+            "menu_items": ["Pav Bhaji"],
+            "hygiene_rating": 3.8,
+            "images": []
+        })
+
+        response = client.get('/api/food?type=canteen')
+        assert response.status_code == 200
+        body = response.get_json()
+        assert all(v['type'] == 'canteen' for v in body['food_vendors'])

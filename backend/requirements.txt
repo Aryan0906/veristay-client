@@ -3,3 +3,6 @@ Flask-Cors
 python-dotenv
 pytest
 pytest-cov
+supabase
+PyJWT
+gunicorn

@@ -1,74 +1,58 @@
-import { MapPin, IndianRupee, ShieldCheck } from 'lucide-react';
-import type { Hostel } from '../types';
 import { Link } from 'react-router-dom';
+import { MapPin, IndianRupee, BadgeCheck, Star } from 'lucide-react';
+import type { Hostel } from '../types';
 
 interface Props {
     hostel: Hostel;
+    highlighted?: boolean;
 }
 
-export default function HostelCard({ hostel }: Props) {
+export default function HostelCard({ hostel, highlighted }: Props) {
+    const avgRating = hostel.reviews.length
+        ? hostel.reviews.reduce((sum, review) => sum + review.rating, 0) / hostel.reviews.length
+        : 0;
+
     return (
-        <Link to={`/hostel/${hostel.id}`} className="block group">
-            <div className="bg-white rounded-2xl shadow-card border border-gray-100 overflow-hidden hover:shadow-card-hover hover:border-primary-200 transition-all duration-500 h-full flex flex-col hover:-translate-y-1">
-                <div className="relative h-64 overflow-hidden">
-                    <img
-                        src={hostel.images?.[0] || 'https://images.pexels.com/photos/4907197/pexels-photo-4907197.jpeg?auto=compress&cs=tinysrgb&w=800'}
-                        alt={hostel.name}
-                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
-                    />
-                    {/* Overlay Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50 group-hover:opacity-40 transition-opacity"></div>
-
-                    {/* Verified Badge */}
-                    {hostel.is_verified && (
-                        <div className="absolute top-4 left-4 glass text-primary-700 px-3 py-1.5 rounded-lg text-xs font-bold shadow-soft flex items-center gap-1.5 border border-white/20">
-                            <ShieldCheck className="h-3.5 w-3.5 text-green-600" />
-                            Verified
-                        </div>
-                    )}
+        <Link
+            to={`/hostels/${hostel.id}`}
+            className={`block rounded-2xl border bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover ${
+                highlighted ? 'border-primary-500 ring-2 ring-primary-200' : 'border-secondary-300'
+            }`}
+        >
+            <img
+                src={hostel.images[0] || 'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?auto=format&fit=crop&w=900&q=80'}
+                alt={hostel.name}
+                className="h-52 w-full rounded-t-2xl object-cover"
+            />
+            <div className="space-y-3 p-4">
+                <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-display text-lg font-semibold text-text-primary">{hostel.name}</h3>
+                    {hostel.is_verified ? (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-primary-50 px-2 py-1 text-xs font-semibold text-primary-700">
+                            <BadgeCheck className="h-3.5 w-3.5" /> Verified
+                        </span>
+                    ) : null}
                 </div>
-
-                <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-xl font-display font-bold text-gray-900 group-hover:text-primary-600 transition-colors line-clamp-1">
-                            {hostel.name}
-                        </h3>
-                    </div>
-
-                    <div className="flex items-start text-gray-600 text-sm mb-6 gap-2">
-                        <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary-500" />
-                        <span className="line-clamp-2 font-medium">{hostel.address}</span>
-                    </div>
-
-                    {/* Amenities Preview */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                        {hostel.amenities.slice(0, 3).map((amenity, index) => (
-                            <span key={index} className="text-xs bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg font-medium border border-gray-200">
-                                {amenity}
-                            </span>
-                        ))}
-                        {hostel.amenities.length > 3 && (
-                            <span className="text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-lg font-semibold border border-primary-200">
-                                +{hostel.amenities.length - 3} more
-                            </span>
-                        )}
-                    </div>
-
-                    <div className="mt-auto pt-5 border-t border-gray-100 flex items-center justify-between">
-                        <div>
-                            <p className="text-xs text-gray-500 mb-1 font-semibold uppercase tracking-wider">Starting from</p>
-                            <div className="flex items-center text-gray-900 font-display font-bold text-2xl">
-                                <IndianRupee className="h-5 w-5" />
-                                <span>{hostel.price_min.toLocaleString('en-IN')}</span>
-                                <span className="text-gray-500 text-sm font-normal ml-1">/mo</span>
-                            </div>
-                        </div>
-
-                        <button className="bg-primary-600 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-700 transition-all duration-300 shadow-soft hover:shadow-soft-xl hover:scale-105 transform">
-                            View Details
-                        </button>
-                    </div>
+                <p className="flex items-start gap-1 text-sm text-text-secondary">
+                    <MapPin className="mt-0.5 h-4 w-4 flex-none" />
+                    <span>{hostel.address}</span>
+                </p>
+                <p className="flex items-center gap-1 text-sm text-text-secondary">
+                    <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                    {avgRating ? avgRating.toFixed(1) : 'No ratings yet'}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                    {hostel.amenities.slice(0, 4).map((amenity) => (
+                        <span key={amenity} className="rounded-full bg-secondary-200 px-2 py-1 text-xs text-text-secondary">
+                            {amenity}
+                        </span>
+                    ))}
                 </div>
+                <p className="flex items-center text-lg font-bold text-accent-600">
+                    <IndianRupee className="h-4 w-4" />
+                    {hostel.price_min.toLocaleString('en-IN')} - {hostel.price_max.toLocaleString('en-IN')}
+                    <span className="ml-1 text-xs font-medium text-text-tertiary">/month</span>
+                </p>
             </div>
         </Link>
     );

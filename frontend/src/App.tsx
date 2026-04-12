@@ -1,24 +1,30 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Explore from './pages/Explore';
-import HostelDetail from './pages/HostelDetail';
-import About from './pages/About';
+import HomePage from './pages/HomePage';
+import CollegesPage from './pages/CollegesPage';
+import HostelsPage from './pages/HostelsPage';
+import HostelDetailPage from './pages/HostelDetailPage';
+import FoodPage from './pages/FoodPage';
+import FoodDetailPage from './pages/FoodDetailPage';
+import AuthPage from './pages/AuthPage';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-gray-50 text-gray-900">
+    <AuthProvider>
+      <div className="min-h-screen font-sans bg-gray-50 text-gray-900">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/hostel/:id" element={<HostelDetail />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<div className="p-10 text-center">Login Page Coming Soon</div>} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/colleges" element={<CollegesPage />} />
+          <Route path="/hostels" element={<HostelsPage />} />
+          <Route path="/hostels/:id" element={<HostelDetailPage />} />
+          <Route path="/food" element={<FoodPage />} />
+          <Route path="/food/:id" element={<FoodDetailPage />} />
+          <Route path="/auth" element={<AuthPage />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </AuthProvider>
   );
 }
 
